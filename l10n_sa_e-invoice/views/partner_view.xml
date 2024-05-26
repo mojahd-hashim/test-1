@@ -1,0 +1,47 @@
+<odoo>
+
+    <record id="add_street3_in_form_view" model="ir.ui.view">
+      <field name="name">add ZATCA Address Details in form view</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_form"/>
+      <field name="arch" type="xml">
+        <xpath
+            expr="/form/sheet/group/group/div/field[@name='street2']"
+            position="after">
+          <field name="building_number" 
+                 placeholder="Building N°..." 
+                 class="o_address_building_number"
+                 attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+          <field name="plot_identification" 
+                 placeholder="Additional N°..." 
+                 class="o_address_plot_identification"
+                 attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+          <field name="city_subdivision" 
+                 placeholder="District..." 
+                 class="o_address_city_subdivision"
+                 attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>                    
+        </xpath>
+        <xpath expr="/form//field[@name='child_ids']/form//field[@name='street2']"
+               position="after">
+          <field name="building_number" placeholder="Building N°..." class="o_address_building_number"/>
+          <field name="plot_identification" placeholder="Additional N°..." class="o_address_plot_identification"/>
+          <field name="city_subdivision" placeholder="District..." class="o_addo_address_city_subdivisionress_city"/>  
+        </xpath>
+      </field>
+    </record>
+
+
+    <record id="view_partner_address_form" model="ir.ui.view">
+      <field name="name">add ZATCA Address Details in res.partner.form.address</field>
+      <field name="model">res.partner</field>
+      <field name="inherit_id" ref="base.view_partner_address_form"/>
+      <field name="arch" type="xml">
+        <field name="street2" position="after">
+          <field name="building_number" placeholder="Building N°..." class="o_address_building_number"/>
+          <field name="plot_identification" placeholder="Additional N°..." class="o_address_plot_identification"/>
+          <field name="city_subdivision" placeholder="District..." class="o_address_city_subdivision"/>  
+        </field>
+      </field>
+    </record>
+
+</odoo>

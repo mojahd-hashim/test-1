@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="invoice_form" model="ir.ui.view">
+        <field name="name">account_e-invoice.customer.invoice.form</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_form"/>
+        <field name="arch" type="xml">
+            <button name="action_invoice_draft" position="after">
+                <button type="object" name="action_send_einvoices" class="oe_highlight"
+                    string="Send E-invoice" attrs="{'invisible': ['|',('state', 'not in', ('open','paid')),('l10n_sa_send_state', 'in', ('reported', 'cleared'))]}"/>
+            </button>
+            <xpath expr="//notebook" position="inside">
+                <page name="zatca" string="E-invoice Details">
+                    <div class="d-flex">
+                        <field name="position3" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <label for="position3" style="margin-right: 40px !important"/>
+                        <field name="position4" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <label for="position4" style="margin-right: 40px !important"/>
+                        <field name="position5" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <label for="position5" style="margin-right: 40px !important"/>
+                        <field name="position6" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <label for="position6" style="margin-right: 40px !important"/>
+                        <field name="position7" attrs="{'readonly': [('state', '!=', 'draft')]}"/>
+                        <label for="position7" style="margin-right: 40px !important"/>
+                    </div>
+                    <group>
+                        <field name="xml_file"/>
+                        <field name="l10n_sa_send_state"/>
+                        <field name="warning_messages"/>
+                        <field name="error_messages"/>
+                        <!-- <field name="response_message_zatca" groups="base.group_no_one"/> -->
+                    </group>
+                </page>
+            </xpath>
+            <field name="date_invoice" position="after">
+                <field name="l10n_sa_show_delivery_date" invisible="1"/>
+                <field name="l10n_sa_delivery_date" attrs="{'invisible': [('l10n_sa_show_delivery_date', '=', False)], 'required': [('l10n_sa_show_delivery_date', '=', True)]}"/>
+                <field name="si_remaining_hours" attrs="{'invisible': [('si_remaining_hours', '=', 25)]}"/>
+            </field>
+            <!-- <field name="payment_term_id" position="after">
+                <field name="payment_mode_id"
+                       domain="[('payment_type', '=', 'inbound'), ('company_id', '=', company_id)]"
+                       widget="selection"/>
+            </field> -->
+        </field>
+    </record>
+
+    <record id="invoice_tree" model="ir.ui.view">
+        <field name="name">account_e-invoice.customer_invoice_tree</field>
+        <field name="model">account.invoice</field>
+        <field name="inherit_id" ref="account.invoice_tree"/>
+        <field name="arch" type="xml">
+            <field name="state" position="after">
+                <field name="l10n_sa_send_state"/>
+            </field>
+        </field>
+    </record>
+
+    <record model="ir.actions.server" id="send_xml_invoice_action">
+        <field name="name">Send E-invoices</field>
+        <field name="model_id" ref="account.model_account_invoice"/>
+        <field name="binding_model_id" ref="account.model_account_invoice"/>
+        <field name="state">code</field>
+        <field name="code">
+records.action_send_einvoices()
+        </field>
+    </record>
+
+</odoo>

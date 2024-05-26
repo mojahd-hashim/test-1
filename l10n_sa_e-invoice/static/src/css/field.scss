@@ -1,0 +1,35 @@
+.o_form_view {
+
+   &.o_form_editable .o_address_format {
+      input.o_address_building_number {
+         float: left;
+         margin-right: 2%;
+         width: 25%;
+      }
+
+      input.o_address_plot_identification {
+         margin-right: 2%;
+         width: 25%;
+      }
+
+      input.o_address_city_subdivision {
+         margin-right: 0%;
+         width: 46%;
+      }
+   }
+
+   .o_address_format {
+      span.o_address_building_number {
+         float: left;
+         margin-right: 2%;
+      }
+
+      span.o_address_plot_identification {
+         margin-right: 2%;
+      }
+
+      span.o_address_city_subdivision {
+         margin-right: 2%;
+      }
+   }
+}

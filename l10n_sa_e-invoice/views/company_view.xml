@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="view_company_form_zatca_extended" model="ir.ui.view">
+        <field name="name">Company data required by the ZATCA</field>
+        <field name="model">res.company</field>
+        <field name="inherit_id" ref="base.view_company_form"></field>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='street2']" position="after">
+                <field name="building_number" placeholder="Building N°..." class="o_address_building_number"/>
+                <field name="plot_identification" placeholder="Additional N°..." class="o_address_plot_identification"/>
+                <field name="city_subdivision" placeholder="District..." class="o_address_city_subdivision"/>                    
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page name="zatca" string="Configuracion ZATCA API">
+                    <header>
+                        <button type="object" name="action_zatca_onboarding_company_step" string="Onboarding" attrs="{'invisible': [('digital_certificate','!=','')]}" class="oe_highlight"/>                            
+                        <button type="object" name="action_zatca_renewal_company_step" string="Renewal" attrs="{'invisible': [('digital_certificate','=','')]}" class="oe_highlight"/>
+                    </header>
+                    <div class="alert alert-info" role="alert" attrs="{'invisible': [('digital_certificate','=','')]}">
+                        <strong>Onboarding process completed successfully.</strong>
+                    </div>
+                    <div class="alert alert-warning" role="alert" attrs="{'invisible': ['|',('compliance_digital_certificate','=',''), ('digital_certificate','!=','')]}">
+                        <strong>One or more compliance checks have failed or are not completed.</strong>
+                    </div>
+                    <group string="Main details">
+                        <group>
+                            <field name="is_prd" widget='radio' options="{'horizontal': true}"/>
+                            <field name="zatca_server" invisible="1" groups="base.group_no_one"/>
+                            <field name="invoice_type_t"/>
+                            <field name="invoice_type_s"/>
+                        </group>
+                        <group>
+                            <field name="business_category"/>
+                            <field name="otp"/>
+                            <!-- <field name="file_name" invisible="1"/>
+                            <label for="xml_file"/>
+                            <div class="o_row">
+                                <field name="xml_file" filename="file_name"/>
+                                <button name="complianceChecks" type="object" string=" Compliance Checks" class="btn btn-primary btn-sm fa fa-gears"/>
+                            </div> -->
+                        </group>
+                    </group>
+                    <group>
+                        <group string="CCSID details">
+                            <field name="compliance_request_id" string="requestID" readonly="1" groups="base.group_no_one"/>
+                            <field name="compliance_digital_certificate" string="Username" readonly="1" style="width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"/>
+                            <field name="compliance_password_secret" string="Password" readonly="1" password="True"/>
+                        </group>
+                        <group string="PCSID details">
+                            <field name="request_id" readonly="1" groups="base.group_no_one"/>
+                            <field name="digital_certificate" readonly="1" style="width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"/>
+                            <field name="password_secret" readonly="1" password="True"/>
+                        </group>
+                    </group>
+                </page>
+                <page name="zatca_checks" string="Checks Logs" groups="base.group_no_one">
+                    <separator string="Compliance Checks"/>
+                    <field name="compliance_checks" readonly="1">
+                        <tree>
+                            <field name="type"/>
+                            <field name="state"/>
+                        </tree>
+                        <form>
+                            <group>
+                                <field name="file_name" invisible="1"/>
+                                <field name="xml_file" filename="file_name"/>
+                                <field name="type"/>
+                                <field name="state"/>
+                                <field name="warning_messages"/>
+                                <field name="error_messages"/>
+                                <field name="response_message_zatca" invisible="1"/>
+                            </group>
+                        </form>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

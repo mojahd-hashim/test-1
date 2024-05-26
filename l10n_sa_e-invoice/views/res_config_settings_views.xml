@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.account.zatca</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <div id="recommended_apps" position="after">
+                <h2>ZATCA</h2>
+                <div class="row mt16 o_settings_container">
+                    <div class="col-12 col-lg-6 o_setting_box" id="monitor_zatca_server" groups="base.group_no_one">
+                        <div class="o_setting_left_pane"/>
+                        <div class="o_setting_right_pane">
+                            <span class="o_form_label">Server</span>
+                            <div class="text-muted">
+                                <field name="zatca_server" required="True"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-6 o_setting_box" id="monitor_zatca_auto_send">
+                        <div class="o_setting_left_pane">
+                            <field name="zatca_auto_send"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="zatca_auto_send"/>
+                            <div class="text-muted">
+                                Automatic sending of electronic invoices after Confirmation
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </field>
+    </record>
+</odoo>
